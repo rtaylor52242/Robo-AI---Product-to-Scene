@@ -12,6 +12,7 @@ import ObjectCard from './components/ObjectCard';
 import Spinner from './components/Spinner';
 import DebugModal from './components/DebugModal';
 import TouchGhost from './components/TouchGhost';
+import HelpModal from './components/HelpModal';
 
 // Pre-load a transparent image to use for hiding the default drag ghost.
 // This prevents a race condition on the first drag.
@@ -56,6 +57,7 @@ const App: React.FC = () => {
   const [debugImageUrl, setDebugImageUrl] = useState<string | null>(null);
   const [debugPrompt, setDebugPrompt] = useState<string | null>(null);
   const [isDebugModalOpen, setIsDebugModalOpen] = useState(false);
+  const [isHelpModalOpen, setIsHelpModalOpen] = useState(false);
 
   // State for touch drag & drop
   const [isTouchDragging, setIsTouchDragging] = useState<boolean>(false);
@@ -438,7 +440,7 @@ const App: React.FC = () => {
         position={touchGhostPosition}
       />
       <div className="flex flex-col items-center gap-8 w-full">
-        <Header />
+        <Header onHelpClick={() => setIsHelpModalOpen(true)} />
         <main className="w-full">
           {renderContent()}
         </main>
@@ -448,6 +450,10 @@ const App: React.FC = () => {
         onClose={() => setIsDebugModalOpen(false)}
         imageUrl={debugImageUrl}
         prompt={debugPrompt}
+      />
+      <HelpModal 
+        isOpen={isHelpModalOpen}
+        onClose={() => setIsHelpModalOpen(false)}
       />
     </div>
   );
